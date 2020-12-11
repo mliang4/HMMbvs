@@ -2,7 +2,7 @@
 
 This is an Rcpp package that performs Bayesian variable selection for mobile health data using Multistate Markov Model (MSM) or Hidden Markov Model (HMM). The main goal of this software package is to identify risk factors associated with individual behaviors. The main function is written in C++ via the R package Rcpp, which allows both accelerated performance and easy implementation in R environment. This package also comes with R wrapper functions that produce processed outcome, summarization and plots for posterior inference. For more details, please see our manuscript
 
-> ** Mingrui Liang, Matthew D. Koslovsky, Emily T. Hebert, Darla E. Kendzor, Michael S. Businelle, Marina Vannucci ** - *Bayesian Variable Selection for Binary Longitudinal Data with Measurement Error: An Application to mHealth Data*
+> Mingrui Liang, Matthew D. Koslovsky, Emily T. Hebert, Darla E. Kendzor, Michael S. Businelle, Marina Vannucci - *Bayesian Variable Selection for Binary Longitudinal Data with Measurement Error: An Application to mHealth Data*
 
 ## Getting Started
 
