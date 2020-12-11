@@ -32,7 +32,7 @@ If the https repository doesn't work, the first line can be changed to:
 git clone git@github.com:mliang4/HMMbvs.git
 ```
 
-Then, copy and paste the following in a R or RStudio console, which will install the package to the R library:
+Then, open an R or RStudio console and set the working directory to the path of the package. Run the following command, which will install the package to the R library:
 
 ```R
 library(devtools)
