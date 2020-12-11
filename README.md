@@ -22,7 +22,7 @@ To get started, first make sure the following libraries are installed in R:
 Switch to the desired directory to put the package, then copy and paste the following commands in terminal, which will download the package, switch the working directory and open an R console for you:
 
 ```shell
-git clone https://github.com/mliang4/HMMBVS.git
+git clone https://github.com/mliang4/HMMbvs.git
 cd HMMBVS
 R
 ```
@@ -30,7 +30,7 @@ R
 If the https repository doesn't work, the first line can be changed to:
 
 ```shell
-git clone git@github.com:mliang4/HMMBVS.git
+git clone git@github.com:mliang4/HMMbvs.git
 ```
 
 Then, copy and paste the following in the R console, which will install the package to the R library:
