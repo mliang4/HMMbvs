@@ -1,0 +1,18 @@
+Package: HMMbvs
+Type: Package
+Title: Bayesian Variable Selection for HMM model
+Version: 1.0
+Date: 2020-05-08
+Authors@R: person("Scott", "Liang", email = "ml86@rice.edu", role = c("aut", "cre"))
+Author: Scott Liang
+Maintainer: Scott Liang <ml86@rice.edu>
+Description: Performs Bayesian variable selection for mobile health data. Identifying risk factors associated with individual behaviors.
+License: MIT + file LICENSE
+Imports: Rcpp (>= 1.0.3), RcppArmadillo (>= 0.9.800.1.0)
+Suggests: 
+    msm (>= 1.6.7),
+    MASS (>= 7.3-51.4),
+    reshape (>= 0.8.0),
+    abind (>= 1.4-5),
+LinkingTo: Rcpp, RcppArmadillo
+VignetteBuilder: knitr
