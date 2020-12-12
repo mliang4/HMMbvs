@@ -1,9 +1,7 @@
 ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
-  
-  library(bayesplot)
-  library(msm)
-  library(ggplot2)
-  
+  suppressMessages(library(bayesplot))
+  suppressMessages(library(msm))
+  suppressMessages(library(ggplot2)  )
   sigmoid = function(z){
     return(exp(z)/(1+exp(z)))
   }
@@ -85,7 +83,7 @@ ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
       legend_none() +
       xaxis_title(size = 13, family = "sans") +
       labs(x="Count", title="Total number of state '1' predicted", subtitle=paste0("Two-sided p-value = ", round(pval,3)))
-    print(g)
+    suppressMessages(print(g))
 
   }
   yy = NULL
@@ -112,7 +110,7 @@ ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
       legend_none() +
       xaxis_title(size = 13, family = "sans") +
       labs(x="Value", title="The mean of averaged % of state '1' per subject", subtitle=paste0("Two-sided p-value = ", round(pval,3)))
-    print(g)
+    suppressMessages(print(g))
   }
   
   if("var" %in% type){
@@ -127,7 +125,7 @@ ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
       legend_none() +
       xaxis_title(size = 13, family = "sans") +
       labs(x="Value", title="The variance of averaged % of state '1' per subject", subtitle=paste0("Two-sided p-value = ", round(pval,3)))
-    print(g)
+    suppressMessages(print(g))
 
   }
   
@@ -161,7 +159,7 @@ ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
       legend_none() +
       xaxis_title(size = 13, family = "sans") +
       labs(x="Count", title=paste0("Total number of transitions from ",state1," to ",state2," predicted"), subtitle=paste0("Two-sided p-value = ", round(pval,3)))
-    print(g)
+    suppressMessages(print(g))
   }
   
   
