@@ -1,4 +1,4 @@
-# HMMBVS
+# Bayesian Variable Selection on Hidden Markov Model
 
 This is an Rcpp package that performs Bayesian variable selection for mobile health data using Multistate Markov Model (MSM) or Hidden Markov Model (HMM). The main goal of this software package is to identify risk factors associated with individual behaviors. The main function is written in C++ via the R package Rcpp, which allows both accelerated performance and easy implementation in R environment. This package also comes with R wrapper functions that produce processed outcome, summarization and plots for posterior inference. For more details, please see our manuscript
 
@@ -19,12 +19,11 @@ To get started, first make sure the following libraries are installed in R:
 * devtools
 
 
-Switch to the desired directory to put the package, then copy and paste the following commands in terminal, which will download the package, switch the working directory and open an R console for you:
+Switch to the desired directory to put the package, then copy and paste the following commands in terminal, which will download the package and switch to the working directory for you:
 
 ```shell
 git clone https://github.com/mliang4/HMMbvs.git
-cd HMMBVS
-R
+cd HMMbvs
 ```
 
 If the https repository doesn't work, the first line can be changed to:
@@ -33,7 +32,7 @@ If the https repository doesn't work, the first line can be changed to:
 git clone git@github.com:mliang4/HMMbvs.git
 ```
 
-Then, copy and paste the following in the R console, which will install the package to the R library:
+Then, open an R or RStudio console and set the working directory to the path of the package. Run the following command, which will install the package to the R library:
 
 ```R
 library(devtools)
@@ -43,4 +42,4 @@ devtools::install()
 
 ## Using the package
 
-For example of how to use this software package, please see vignettes/HMMbvs-vignette.html
+For example of how to use this software package, please see vignettes/HMMbvs-vignette.html or the tutorial section in our paper.
