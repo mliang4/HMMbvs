@@ -16,7 +16,17 @@ To get started, first make sure the following libraries are installed in R:
 
 * MASS
 
+* coda
+
+* reshape
+
+* abind
+
 * devtools
+
+* ggplot2
+
+* bayesplot
 
 
 Switch to the desired directory to put the package, then copy and paste the following commands in terminal, which will download the package and switch to the working directory for you:
