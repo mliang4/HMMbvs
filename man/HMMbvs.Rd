@@ -9,7 +9,10 @@
 \packageDescription{HMMbvs}
 }
 \usage{
-HMMbvs_R( data = NULL, tcova = NULL, tforce = NULL, ecova = NULL, eforce = NULL, standardize = NULL, model = "HMM", init = "baseline", initvalue = NULL, iter = 5000, v1 = 5, v2 = 1, a = 1, b = 9, thin = 10, thin_hidden = 10)
+HMMbvs_R( data = NULL, tcova = NULL, tforce = NULL, ecova = NULL, 
+eforce = NULL, standardize = NULL, model = "HMM", init = "baseline", 
+initvalue = NULL, iter = 5000, v1 = 5, v2 = 1, a = 1, b = 9, 
+thin = 10, thin_hidden = 10)
 }
 \arguments{
   \item{datmat}{A long format matrix of observed data. Must contain at least three columns representing the subject ID, observed state, and observation time for each observation.}
@@ -46,20 +49,29 @@ Mingrui Liang, Matthew D. Koslovsky, Emily T. Hebert, Darla E. Kendzor, Michael 
 # Generating simulation data
 
 set.seed(125)
-df <- sim_data( ind = 150, window = 30, lambda_0 = 0.5, mu_0 = 0.5, emisP0 = 0.95, emisP1 = 0.95, 
-      pt = 30, pe = 20, bval = c(0.7,1.0,1.5), biased = TRUE )
+
+df <- sim_data( ind = 150, window = 30, lambda_0 = 0.5, mu_0 = 0.5, 
+emisP0 = 0.95, emisP1 = 0.95, pt = 30, pe = 20, bval = c(0.7,1.0,1.5), 
+biased = TRUE )
 
 # Sampling for the HMM model
 
-hmmout <- HMMbvs_R( data = df$DATA, tcova = c( "tVar1", "tVar2", "tVar3", "tVar4", "tVar5", "tVar6", "tVar7", "tVar8", "tVar9", "tVar10", "tVar11", "tVar12", "tVar13", "tVar14", "tVar15" ), ecova = c( "eVar1", "eVar2", "eVar3", "eVar4", "eVar5", "eVar6", "eVar7" ), tforce = NULL, eforce = NULL, standardize = NULL, model = "HMM", init = "baseline", initvalue = NULL, iter = 25000, v1 = 5, v2 = 1, a = 1, b = 9, thin = 10, thin_hidden = 10)
+hmmout <- HMMbvs_R( data = df$DATA, tcova = c( "tVar1", "tVar2", "tVar3", 
+"tVar4", "tVar5", "tVar6", "tVar7", "tVar8", "tVar9", "tVar10", "tVar11", 
+"tVar12", "tVar13", "tVar14", "tVar15" ), ecova = c( "eVar1", "eVar2", 
+"eVar3", "eVar4", "eVar5", "eVar6", "eVar7" ), tforce = NULL, eforce = NULL, 
+standardize = NULL, model = "HMM", init = "baseline", initvalue = NULL, 
+iter = 25000, v1 = 5, v2 = 1, a = 1, b = 9, thin = 10, thin_hidden = 10)
   
 # Accessing convergence and goodness-of-fit
 
 convergence( output = hmmout, file = "convergence.pdf")
 
-ypost = ppc( output = hmmout, file = "ppc_plot.pdf", type = "sum_one", burnin = 1000, postsample = NULL)
+ypost = ppc( output = hmmout, file = "ppc_plot.pdf", type = "sum_one", 
+burnin = 1000, postsample = NULL)
 
 # Posterior inference of selection and estimation
 
-out <- selection( output = hmmout, burnin = 1000, cred = 0.95, threshold = 0.5, trueGamma = NULL, plotting = TRUE, file = "mppi.pdf")
+out <- selection( output = hmmout, burnin = 1000, cred = 0.95, 
+threshold = 0.5, trueGamma = NULL, plotting = TRUE, file = "mppi.pdf")
 }
