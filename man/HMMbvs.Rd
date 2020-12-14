@@ -42,14 +42,10 @@ HMMbvs(datmat=NULL, beta=NULL, gamma=NULL, nobs=NULL, sp=NULL,
 Maintainer: \packageMaintainer{HMMbvs}
 }
 \references{
-~~ Literature or other references for background information ~~
+Mingrui Liang, Matthew D. Koslovsky, Emily T. Hebert, Darla E. Kendzor, Michael S. Businelle, Marina Vannucci - Bayesian Variable Selection for Binary Longitudinal Data with Measurement Error: An Application to mHealth Data
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
+
 \keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
 \examples{
 # simulation study in paper
 
