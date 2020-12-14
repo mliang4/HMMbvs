@@ -12,6 +12,5 @@ Imports: Rcpp (>= 1.0.3), RcppArmadillo (>= 0.9.800.1.0), msm (>= 1.6.7), MASS (
     reshape (>= 0.8.0), abind (>= 1.4-5), bayesplot (>= 1.7.0)
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: knitr, rmarkdown
-    
 LinkingTo: Rcpp, RcppArmadillo
 VignetteBuilder: knitr
