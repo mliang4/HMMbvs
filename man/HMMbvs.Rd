@@ -67,7 +67,7 @@ iter = 25000, v1 = 5, v2 = 1, a = 1, b = 9, thin = 10, thin_hidden = 10)
 
 convergence( output = hmmout, file = "convergence.pdf")
 
-ypost = ppc( output = hmmout, file = "ppc_plot.pdf", type = "sum_one", 
+ypost <- ppc( output = hmmout, file = "ppc_plot.pdf", type = "sum_one", 
 burnin = 1000, postsample = NULL)
 
 # Posterior inference of selection and estimation
