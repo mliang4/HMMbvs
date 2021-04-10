@@ -8,6 +8,7 @@ sim_data = function(
   pt = 30,
   pe = 20,
   bval = c(0.7,1.0,1.5),
+  cor = 0.0,
   biased = TRUE
   ){
   
@@ -62,7 +63,19 @@ sim_data = function(
     
     # continuous variables
     nCon = length(beta_lambda) - nBi # number of continuous variables
-    conVar = mvrnorm(n = 1, mu = rep(0,nCon), Sigma = correl + (1-correl)*diag(nCon))
+    
+    # Make X - Correlation between covariates is cor
+    sigma2 <- diag( nCon )
+    
+    for( i in 1:nCon ){
+      for( j in 1:nCon ){
+        if( i != j ){
+          sigma2[ i , j ] = cor^abs(i - j)
+        }
+      }
+    }
+    
+    conVar = mvrnorm(n = 1, mu = rep(0,nCon), Sigma = sigma2)
     curr = 1
     prev = NA  # fill this in retrospectively
     t = 0
@@ -150,7 +163,19 @@ sim_data = function(
     
     # build emission covariate matrix
     nEmis = length(beta_0)-2
-    cont2 = mvrnorm(n=1, rep(0,nEmis), correl + (1-correl)*diag(nEmis)) 
+    
+    # Make X - Correlation between covariates is cor
+    sigma2p <- diag( nEmis )
+    
+    for( i in 1:nEmis ){
+      for( j in 1:nEmis ){
+        if( i != j ){
+          sigma2p[ i , j ] = cor^abs(i - j)
+        }
+      }
+    }
+    
+    cont2 = mvrnorm(n=1, rep(0,nEmis), sigma2p) 
     # borrowed 2 covariates from transition
     
     emisX = NULL
@@ -210,13 +235,13 @@ sim_data = function(
   datmat = cbind(id,x[,2:(pt+1)],x[,(pt+9):(pt+9+pe-1)],y,obstime)
   # datmat = as.matrix(datmat)  
   trueBeta = rbind(c("baseline01",log(0.5)),
-                   cbind(paste0("t01_",colnames(datmat)[2:31]),betatrue[1:30]),
+                   cbind(paste0("t01_",colnames(datmat)[2:(pt+1)]),betatrue[1:pt]),
                    c("baseline10",log(0.5)),
-                   cbind(paste0("t10_",colnames(datmat)[2:31]),betatrue[31:60]),
+                   cbind(paste0("t10_",colnames(datmat)[2:(pt+1)]),betatrue[(pt+1):(2*pt)]),
                    c("baseline00",1/(1/emisP0-1)),
-                   cbind(paste0("e00_",colnames(datmat)[32:51]),betatrue[61:80]),
+                   cbind(paste0("e00_",colnames(datmat)[(pt+2):(pt+pe+1)]),betatrue[(2*pt+1):(2*pt+pe)]),
                    c("baseline11",1/(1/emisP1-1)),
-                   cbind(paste0("e11_",colnames(datmat)[32:51]),betatrue[81:100]))
+                   cbind(paste0("e11_",colnames(datmat)[(pt+2):(pt+pe+1)]),betatrue[(2*pt+pe+1):(2*pt+2*pe)]))
   ##############################################################################
   ##############################################################################
   
