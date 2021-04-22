@@ -667,7 +667,9 @@ List HMMbvs(
     double a=1,
     double b=9,
     int thin=10,
-    int thin_hidden=10
+    int thin_hidden=10,
+    int base01larger=-1,
+    int base00larger=-1
 ){
   
   // INITIALIZATION
@@ -723,6 +725,38 @@ List HMMbvs(
     //////////////////
     
     beta = help::within_step(hmm, datmat, h, beta, gamma, nobs, sp, v1, v2, pt, pe);
+    
+    double tmp_con=0;
+    
+    if (base01larger == 1){
+      tmp_con = beta[0];
+      if(tmp_con < beta[pt]){
+        beta[0] = beta[pt];
+        beta[pt] = tmp_con;
+      }
+    }else if(base01larger == 0){
+      tmp_con = beta[0];
+      if(tmp_con > beta[pt]){
+        beta[0] = beta[pt];
+        beta[pt] = tmp_con;
+      }
+    }
+    
+    if (base00larger == 1){
+      tmp_con = beta[2*pt];
+      if(tmp_con < beta[2*pt+pe]){
+        beta[2*pt] = beta[2*pt+pe];
+        beta[2*pt+pe] = tmp_con;
+      }
+    }else if(base00larger == 0){
+      tmp_con = beta[2*pt];
+      if(tmp_con > beta[2*pt+pe]){
+        beta[2*pt] = beta[2*pt+pe];
+        beta[2*pt+pe] = tmp_con;
+      }
+    }
+      
+
     
     double loglik = 0;
     

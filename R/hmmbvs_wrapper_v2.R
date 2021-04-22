@@ -108,19 +108,35 @@ HMMbvs_R = function(data,
     misc.msm <- msm(y ~ obsTime, subject = id, data = cav, qmatrix = twoway4.q,
                     covariates = list("1-2" = eq01, "2-1" = eq10),
                     hcovariates = list(eq00,eq11),
-                    hmodel = list(hmmBinom(size=1, prob=0.2),hmmBinom(size=1, prob=0.8)),control = list(maxit = 20000,reltol = 1e-16))
+                    hmodel = list(hmmBinom(size=1, prob=0.2),hmmBinom(size=1, prob=0.8)),control = list(maxit = 20000,reltol = 1e-8))
     
-    nest = length(misc.msm$estimates)
-    start11 = nest-(length(emis11)-2)
-    end00 = start11-1
-    start00 = end00-(length(emis00)-2)
+    ntrans = length(tran01) + length(tran10)
+    int1 = misc.msm$estimates[ntrans + 2]; state0 = int1
+    int2 = misc.msm$estimates[ntrans + 4]; state1 = int2
     
-    index1 = start00:end00
-    index2 = start11:nest
-    int1 = (misc.msm$estimates[start00-3])
-    int2 = (misc.msm$estimates[start00-1])
-    state0 = -c(int1,misc.msm$estimates[index1])
-    state1 = c(int2,misc.msm$estimates[index2])
+    if(length(emis00)>1){
+      start00 = ntrans + 5
+      end00 = start00 + length(emis00) - 2
+      state0 = c(state0, misc.msm$estimates[start00:end00])
+      state0 = -state0
+    }
+    
+    if(length(emis11)>1){
+      start11 = ntrans + 5 + length(emis00) - 1
+      end11 = start11 + length(emis11) - 2
+      state1 = c(state1, misc.msm$estimates[start11:end11])
+    }
+    
+    # nest = length(misc.msm$estimates)
+    # start11 = nest-(length(emis11)-2)
+    # end00 = start11-1
+    # start00 = end00-(length(emis00)-2)
+    # index1 = start00:end00
+    # index2 = start11:nest
+    # int1 = (misc.msm$estimates[start00-3])
+    # int2 = (misc.msm$estimates[start00-1])
+    # state0 = -c(int1,misc.msm$estimates[index1])
+    # state1 = c(int2,misc.msm$estimates[index2])
     
     index00 = c(1+pt+pt,pt+which(colnames(datmat) %in% emis00)-1)
     index11 = c(1+pt+pt+pe,pt+pe+which(colnames(datmat) %in% emis11)-1)

@@ -1,14 +1,15 @@
 sim_data = function(
-  ind = 150,
+  ind = 100,
   window = 30,
   lambda_0 = 0.5,
   mu_0 = 0.5,
-  emisP0 = 0.95,
-  emisP1 = 0.95,
+  emisP0 = 0.9,
+  emisP1 = 0.9,
   pt = 30,
   pe = 20,
-  bval = c(0.7,1.0,1.5),
+  bval = c(0.7,0.85,1.0),
   cor = 0.0,
+  pInit = 1,
   biased = TRUE
   ){
   
@@ -16,19 +17,18 @@ sim_data = function(
   library(MASS)
   library(abind)
   
-  # ind = 150
-  # window = 30
-  # emisP0 = 0.95 # approx. probability of telling the truth
-  # emisP1 = 0.95
-  # pt = 30 # pt is the number of transition coefficients
-  # pe = 20 # pe is the number of emission coefficients
-  # bval = c(0.7,1.0,1.5) # the absolute value of the coefficients are randomly selected from these 3 values
+  # ind: number of subjects
+  # window: number of transitions observed
+  # emisP0 # approx. probability of telling the truth
+  # emisP1 
+  # pt: the number of transition coefficients
+  # pe: the number of emission coefficients
+  # bval: the absolute value of the coefficients are randomly selected from these 3 values
+  # cor:
+  # pInit: initial probability
   
   # set true coefficients
   
-  correl = 0
-
-
   intercept_0 = 1/(1/emisP0-1)
   intercept_1 = 1/(1/emisP1-1)
   
@@ -76,7 +76,16 @@ sim_data = function(
     }
     
     conVar = mvrnorm(n = 1, mu = rep(0,nCon), Sigma = sigma2)
-    curr = 1
+    
+    if(pInit == "random"){
+      curr = rbinom(1,1,runif(1))
+    }else if(pInit >= 0 && pInit <= 1){
+      curr = rbinom(1,1,pInit)
+    }else{
+      stop("Bad input: pInit should be a probability or equal to the string \"random\"")
+    }
+
+    
     prev = NA  # fill this in retrospectively
     t = 0
     delta = 1 # always the case because of when the measurememt times are set (every unit)
