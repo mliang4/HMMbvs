@@ -7,8 +7,8 @@
 using namespace Rcpp;
 
 // HMMbvs
-List HMMbvs(arma::mat datmat, arma::vec beta, arma::vec gamma, arma::vec nobs, arma::vec sp, IntegerVector klist, bool hmm, int iterations, double v1, double v2, int pt, int pe, double a, double b, int thin, int thin_hidden);
-RcppExport SEXP _HMMbvs_HMMbvs(SEXP datmatSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP nobsSEXP, SEXP spSEXP, SEXP klistSEXP, SEXP hmmSEXP, SEXP iterationsSEXP, SEXP v1SEXP, SEXP v2SEXP, SEXP ptSEXP, SEXP peSEXP, SEXP aSEXP, SEXP bSEXP, SEXP thinSEXP, SEXP thin_hiddenSEXP) {
+List HMMbvs(arma::mat datmat, arma::vec beta, arma::vec gamma, arma::vec nobs, arma::vec sp, IntegerVector klist, bool hmm, int iterations, double v1, double v2, int pt, int pe, double a, double b, int thin, int thin_hidden, int base01larger, int base00larger);
+RcppExport SEXP _HMMbvs_HMMbvs(SEXP datmatSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP nobsSEXP, SEXP spSEXP, SEXP klistSEXP, SEXP hmmSEXP, SEXP iterationsSEXP, SEXP v1SEXP, SEXP v2SEXP, SEXP ptSEXP, SEXP peSEXP, SEXP aSEXP, SEXP bSEXP, SEXP thinSEXP, SEXP thin_hiddenSEXP, SEXP base01largerSEXP, SEXP base00largerSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -28,13 +28,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type b(bSEXP);
     Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
     Rcpp::traits::input_parameter< int >::type thin_hidden(thin_hiddenSEXP);
-    rcpp_result_gen = Rcpp::wrap(HMMbvs(datmat, beta, gamma, nobs, sp, klist, hmm, iterations, v1, v2, pt, pe, a, b, thin, thin_hidden));
+    Rcpp::traits::input_parameter< int >::type base01larger(base01largerSEXP);
+    Rcpp::traits::input_parameter< int >::type base00larger(base00largerSEXP);
+    rcpp_result_gen = Rcpp::wrap(HMMbvs(datmat, beta, gamma, nobs, sp, klist, hmm, iterations, v1, v2, pt, pe, a, b, thin, thin_hidden, base01larger, base00larger));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_HMMbvs_HMMbvs", (DL_FUNC) &_HMMbvs_HMMbvs, 16},
+    {"_HMMbvs_HMMbvs", (DL_FUNC) &_HMMbvs_HMMbvs, 18},
     {NULL, NULL, 0}
 };
 

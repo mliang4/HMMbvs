@@ -31,34 +31,48 @@ ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
     
     for(sample in 1:nrow(beta_post)){
       
+      z_temp0 = as.matrix(data[,xind3]) %*% beta_post[sample,bind3]
+      z_temp1 = as.matrix(data[,xind4]) %*% beta_post[sample,bind4]
+      p0 = 1 - sigmoid(z_temp0)
+      p1 = sigmoid(z_temp1)
+      y_temp = rbinom(length(p0),1,as.numeric(p0))
+      y_temp = cbind(y_temp, rbinom(length(p1),1,as.numeric(p1)))
+      
+      yvec = NULL
+      for(idx in 1:ncol(hout)){
+        yvec = c(yvec,y_temp[idx,1+hout[sample,idx]])
+      }
+      
       if(sample %% 10 ==0){
         message(paste0(round(sample/nrow(beta_post)*100),"%"))
       }
-      
-      yvec = NULL
-      hvec = hout[sample,]
-      for (i in 1:length(uidvec)){
-        
-        uid = uidvec[i]
-        data0 = data[which(data$id==uid),]
-        
-        hvec_single = hvec[which(data$id==uid)]
-        yvec_single = NULL
-        for (t in 1:length(data0$y)){
-          if (hvec_single[t] == 0){
-            z = sum(data0[t,xind3] * beta_post[sample,bind3])
-            p = 1-sigmoid(z) # emission probability to 1
-            yvec_single = c(yvec_single,rbinom(1,1,p))
-          }else{
-            z = sum(data0[t,xind4] * beta_post[sample,bind4])
-            p = sigmoid(z) # emission probability to 1
-            yvec_single = c(yvec_single,rbinom(1,1,p))
-          }
-        }
-        yvec = c(yvec,yvec_single)
-      }
+      # 
+      # yvec = NULL
+      # hvec = hout[sample,]
+      # for (i in 1:length(uidvec)){
+      #   
+      #   uid = uidvec[i]
+      #   data0 = data[which(data$id==uid),]
+      #   
+      #   hvec_single = hvec[which(data$id==uid)]
+      #   yvec_single = NULL
+      #   for (t in 1:length(data0$y)){
+      #     if (hvec_single[t] == 0){
+      #       z = sum(data0[t,xind3] * beta_post[sample,bind3])
+      #       p = 1-sigmoid(z) # emission probability to 1
+      #       yvec_single = c(yvec_single,rbinom(1,1,p))
+      #     }else{
+      #       z = sum(data0[t,xind4] * beta_post[sample,bind4])
+      #       p = sigmoid(z) # emission probability to 1
+      #       yvec_single = c(yvec_single,rbinom(1,1,p))
+      #     }
+      #   }
+      #   yvec = c(yvec,yvec_single)
+      # }
       ymat = cbind(ymat,yvec)
-    }
+    
+    } # end for sample in 1:nrow(beta_post)
+    
     # save(yrep,file="ppc_prequit.RData")
     yrep = ymat[,-1]
     yrep = t(yrep)
@@ -138,6 +152,7 @@ ppc = function(output,file,type="sum_one", burnin=0, postsample = NULL){
   colnames(yrep_msm)[dim(yrep_msm)[2]] = "id"
   nsvec = snvec = nnvec = ssvec = NULL
   
+  message("Getting transition info, might take a while...")
   for (i in 1:dim(yrep)[1]){
     table = statetable.msm(yrep[i,], subject=id, data = yrep_msm)
     ns = table[1,2]
