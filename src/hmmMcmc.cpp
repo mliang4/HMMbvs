@@ -756,8 +756,6 @@ List HMMbvs(
       }
     }
       
-
-    
     double loglik = 0;
     
     if (iter%thin==0){

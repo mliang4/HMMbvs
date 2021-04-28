@@ -13,7 +13,17 @@ HMMbvs_R = function(data,
                     a=1, 
                     b=9, 
                     thin = 10, 
-                    thin_hidden=10){
+                    thin_hidden=10,
+                    base01larger=-1,
+                    base00larger=-1){
+  
+  if(!base01larger %in% c(-1,0,1)){
+    stop("Bad input: base01larger should be chosen among -1, 0 or 1")
+  }
+  
+  if(!base00larger %in% c(-1,0,1)){
+    stop("Bad input: base00larger should be chosen among -1, 0 or 1")
+  }
   
   library(msm)
   
@@ -143,6 +153,7 @@ HMMbvs_R = function(data,
     
     InitGamma = InitBeta = rep(0,2*pt+2*pe)
     InitGamma[fixin] = 1
+    InitGamma[(2*pt+1):(2*pt+2*pe)] = 1
     InitBeta[index00] = state0
     InitBeta[index11] = state1
     
